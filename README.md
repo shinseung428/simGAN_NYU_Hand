@@ -11,7 +11,7 @@ This is just another version of his code that can generate NYU hand datasets.
 
 The structure of the network is changed as it is described in the Apple paper.  
 The only code added in this version is ./data/hand_data.py.  
-Rest of the code runs in the same way as the original version. 
+Rest of the code runs in the same way as the original version.  
 To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
 
 
@@ -26,22 +26,48 @@ Given these synthetic images,
 ![NYU_hand_synt_5](./results/synt_5.png)
 ![NYU_hand_synt_6](./results/synt_6.png)
 
-Result of 'lambda=0.1' with 'optimizer=sgd' after 10k steps.
+###Test 1
 
-![NYU_hand_ref_1](./results/refined_1.png)
-![NYU_hand_ref_2](./results/refined_2.png)
-![NYU_hand_ref_3](./results/refined_3.png)
-![NYU_hand_ref_4](./results/refined_4.png)
-![NYU_hand_ref_5](./results/refined_5.png)
-![NYU_hand_ref_6](./results/refined_6.png)
+'lambda=0.1' with 'optimizer=sgd' after 4k steps.  
+
+![NYU_hand_ref_1](./results/refined_0.1_1.png)
+![NYU_hand_ref_2](./results/refined_0.1_2.png)
+![NYU_hand_ref_3](./results/refined_0.1_3.png)
+![NYU_hand_ref_4](./results/refined_0.1_4.png)
+![NYU_hand_ref_5](./results/refined_0.1_5.png)
+![NYU_hand_ref_6](./results/refined_0.1_6.png)
 
 ![scalar_result_1](./results/scalar_result_1.png)
 
+###Test 2
 
+'lambda=0.5' with 'optimizer=sgd' after 4k steps.  
+
+![NYU_hand_ref_7](./results/refined_0.5_1.png)
+![NYU_hand_ref_8](./results/refined_0.5_2.png)
+![NYU_hand_ref_9](./results/refined_0.5_3.png)
+![NYU_hand_ref_10](./results/refined_0.5_4.png)
+![NYU_hand_ref_11](./results/refined_0.5_5.png)
+![NYU_hand_ref_12](./results/refined_0.5_6.png)
+
+![scalar_result_2](./results/scalar_result_2.png)
+
+###Test 3
+
+'lambda=1.0' with 'optimizer=sgd' after 4k steps.  
+
+![NYU_hand_ref_13](./results/refined_1.0_1.png)
+![NYU_hand_ref_14](./results/refined_1.0_2.png)
+![NYU_hand_ref_15](./results/refined_1.0_3.png)
+![NYU_hand_ref_16](./results/refined_1.0_4.png)
+![NYU_hand_ref_17](./results/refined_1.0_5.png)
+![NYU_hand_ref_18](./results/refined_1.0_6.png)
+
+![scalar_result_2](./results/scalar_result_2.png)
 
 
 ## Author
 
 Seung Shin / [@shinseung428](http://shinseung428.github.io)
-Taehoon Kim / [@carpedm20](http://carpedm20.github.io)
+
 
