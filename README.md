@@ -8,13 +8,11 @@ Another TensorFlow implementation of [Learning from Simulated and Unsupervised I
 Thanks to [TaeHoon Kim](http://carpedm20.github.io), I was able to run simGAN that generated refined synthetic eye dataset.
 This is just another version of his code that can generate NYU hand datasets.
 
-If you wish to run UnityEyes dataset, please refer to this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow) and follow instructions.
 
-The structure of the network is changed as it is described in the Apple paper. 
-The only code added in this version is ./data/hand_data.py.
-The NYU hand datasets were downloaded and modified(normalized). 
-
-The optimizer and the value of lambda can be changed as it is described in UnityEyes version.
+The structure of the network is changed as it is described in the Apple paper.
+The only code added in this version is ./data/hand_data.py. 
+Rest of the code runs in the same way as the original version.
+To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
 
 
 ##Training Result
