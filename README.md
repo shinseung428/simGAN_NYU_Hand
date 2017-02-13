@@ -3,16 +3,20 @@
 
 Another TensorFlow implementation of [Learning from Simulated and Unsupervised Images through Adversarial Training](https://arxiv.org/abs/1612.07828).
 
-![model](./assets/SimGAN.png)
-
-Thanks to [TaeHoon Kim](http://carpedm20.github.io), I was able to run simGAN that generated refined synthetic eye dataset. 
+Thanks to [TaeHoon Kim](http://carpedm20.github.io), I was able to run simGAN that generates refined synthetic eye dataset.  
 This is just another version of his code that can generate NYU hand datasets.
 
 
-The structure of the network is changed as it is described in the Apple paper.  
+The structure of the refiner/discriminator networks are changed as it is described in the Apple paper.  
 The only code added in this version is ./data/hand_data.py.  
 Rest of the code runs in the same way as the original version.  
-To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
+To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow)
+
+###Notes
+-NYU hand dataset is preprocessed(e.g. background removed)
+-Image size set to 128x128
+-Buffer/Batch size was reduced due to memory issues
+-Local adversarial loss not implemented
 
 
 ##Training Result
