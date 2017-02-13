@@ -26,7 +26,12 @@ Given these synthetic images,
 ![NYU_hand3](./results/synt_3.png)
 ![NYU_hand4](./results/synt_4.png)
 
-Result of 'lambda=0.1' with 'optimizer=sgd' after 000 steps.
+Result of 'lambda=0.1' with 'optimizer=sgd' after 10k steps.
+
+![NYU_hand5](./results/refined_1.png)
+![NYU_hand6](./results/refined_2.png)
+![NYU_hand7](./results/refined_3.png)
+![NYU_hand8](./results/refined_4.png)
 
 ![scalar_result_1](./results/scalar_result_1.png)
 
