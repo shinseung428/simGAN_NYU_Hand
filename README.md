@@ -9,9 +9,9 @@ Thanks to [TaeHoon Kim](http://carpedm20.github.io), I was able to run simGAN th
 This is just another version of his code that can generate NYU hand datasets.
 
 
-The structure of the network is changed as it is described in the Apple paper.
+The structure of the network is changed as it is described in the Apple paper. 
 The only code added in this version is ./data/hand_data.py. 
-Rest of the code runs in the same way as the original version.
+Rest of the code runs in the same way as the original version. 
 To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
 
 
