@@ -21,7 +21,10 @@ The optimizer and the value of lambda can be changed as it is described in Unity
 
 Given these synthetic images,
 
-![NYU_hand](./results/NYU_hand_synthetic.png)
+![NYU_hand1](./results/synt_1.png)
+![NYU_hand2](./results/synt_2.png)
+![NYU_hand3](./results/synt_3.png)
+![NYU_hand4](./results/synt_4.png)
 
 Result of 'lambda=0.1' with 'optimizer=sgd' after 000 steps.
 
