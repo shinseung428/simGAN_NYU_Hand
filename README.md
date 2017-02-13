@@ -4,7 +4,7 @@
 Another TensorFlow implementation of [Learning from Simulated and Unsupervised Images through Adversarial Training](https://arxiv.org/abs/1612.07828).
 
 Thanks to [TaeHoon Kim](http://carpedm20.github.io), I was able to run simGAN that generates refined synthetic eye dataset.  
-This is just another version of his code that can generate NYU hand datasets.
+This is just another version of his code that can generate [NYU hand datasets](http://cims.nyu.edu/~tompson/NYU_Hand_Pose_Dataset.htm).
 
 
 The structure of the refiner/discriminator networks are changed as it is described in the Apple paper.  
