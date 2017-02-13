@@ -13,13 +13,13 @@ Rest of the code runs in the same way as the original version.
 To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow)
 
 ###Notes
--NYU hand dataset is preprocessed(e.g. background removed)
--Image size set to 128x128
--Buffer/Batch size was reduced due to memory issues
--Local adversarial loss not implemented
+-NYU hand dataset is preprocessed(e.g. background removed)  
+-Image size set to 128x128  
+-Buffer/Batch size was reduced due to memory issues  
+-Local adversarial loss not implemented  
 
 
-##Training Result
+##Results
 
 Given these synthetic images,
 
