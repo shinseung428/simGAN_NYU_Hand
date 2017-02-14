@@ -29,9 +29,9 @@ data_arg.add_argument('--max_synthetic_num', type=int, default=-1)
 data_arg.add_argument('--real_image_dir', type=str, default="MPIIGaze")
 data_arg.add_argument('--synthetic_image_dir', type=str, default="UnityEyes")
 
-data_arg.add_argument('--hand_data_dir', type=str, default = 'nyu_hand')
+# data_arg.add_argument('--hand_data_dir', type=str, default = 'nyu_hand')
 data_arg.add_argument('--joint_data_dir', type=str, default = 'cropped_dataset')
-data_arg.add_argument('--hand_data_dir_sub', type=str, default = 'png_cropped_dataset')
+data_arg.add_argument('--hand_data_dir', type=str, default = 'png_cropped_dataset')
 
 # Training / test parameters
 train_arg = add_argument_group('Training')

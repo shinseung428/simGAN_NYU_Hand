@@ -19,8 +19,6 @@ def normalize(arr):
     minval = arr.min()
     maxval = arr.max()
 
-
-
     if minval != maxval:
       arr -= minval
       arr *= (255/(maxval-minval))
@@ -34,8 +32,6 @@ class DataLoader(object):
         self.data_path = os.path.join(config.data_dir, 'hand')
         self.hand_data_path = os.path.join(self.data_path, config.hand_data_dir)
         self.joint_data_path = os.path.join(self.hand_data_path, config.joint_data_dir)
-        self.hand_data_path = os.path.join(self.hand_data_path, config.hand_data_dir_sub)
-        #both synthetic and real data are in '/data/hand/nyuhand/cropped_dataset' folder
         self.sample_path = os.path.join(self.data_path, config.sample_dir)
         self.batch_size = config.batch_size
         self.debug = config.debug

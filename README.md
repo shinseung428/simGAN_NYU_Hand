@@ -32,7 +32,7 @@ Given these synthetic images,
 
 ###Test 1
 
-'lambda=0.1' with 'optimizer=sgd' after 4k steps.  
+'lambda=0.1' with 'optimizer=sgd' after 20k steps.  
 
 ![NYU_hand_ref_1](./results/refined_0.1_1.png)
 ![NYU_hand_ref_2](./results/refined_0.1_2.png)
@@ -45,7 +45,7 @@ Given these synthetic images,
 
 ###Test 2
 
-'lambda=0.5' with 'optimizer=sgd' after 4k steps.  
+'lambda=0.5' with 'optimizer=sgd' after 20k steps.  
 
 ![NYU_hand_ref_7](./results/refined_0.5_1.png)
 ![NYU_hand_ref_8](./results/refined_0.5_2.png)
@@ -58,7 +58,7 @@ Given these synthetic images,
 
 ###Test 3
 
-'lambda=1.0' with 'optimizer=sgd' after 4k steps.  
+'lambda=1.0' with 'optimizer=sgd' after 20k steps.  
 
 ![NYU_hand_ref_13](./results/refined_1.0_1.png)
 ![NYU_hand_ref_14](./results/refined_1.0_2.png)
