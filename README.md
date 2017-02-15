@@ -16,7 +16,8 @@ To set up the environment(or to run UnityEyes dataset), please follow instructio
 -NYU hand dataset is preprocessed(e.g. background removed)  
 -Image size set to 128x128  
 -Buffer/Batch size was reduced due to memory issues  
--Local adversarial loss not implemented  
+-Local adversarial loss implemented with window size 2x2 but produces artifacts  
+*(will test further with smaller window size)  
 
 
 ##Results
