@@ -30,6 +30,7 @@ class Model(object):
 
     show_all_variables()
 
+
   def _build_placeholders(self):
     image_dims = [self.input_height, self.input_width, self.input_channel]
 
@@ -109,17 +110,32 @@ class Model(object):
     with arg_scope([resnet_block, conv2d, max_pool2d, tanh],
                    layer_dict=self.layer_dict):
       #build refiner network
+      #self.R_x is the refined image
       self.R_x = self._build_refiner(self.normalized_x)
       self.denormalized_R_x = denormalize(self.R_x)
 
+      self.dummy_1, self_dummy2 = self._build_discrim(self.normalized_y, name="dummy")
+
+
+
       #build discriminator network
+      #self.D_y and self.D_y_logits are the results returned by the discriminator
+      #when a real image is given as an input
       self.D_y, self.D_y_logits = \
-          self._build_discrim(self.normalized_y, name="D_y")
+          self._build_discriminator_patch(self.normalized_y)#, name="D_y",reuse=False)
+
+      #self.D_R_x and self.D_R_x_logits are the results returned by the discriminator
+      #when a refined synthetic image is given as an input
       self.D_R_x, self.D_R_x_logits = \
-          self._build_discrim(self.R_x, name="D_R_x", reuse=True)
+          self._build_discriminator_patch(self.R_x,reuse=True)#, name="D_R_x", reuse=False)
+
+      #self.D_R_x_history and self.D_R_x_history_logits are the results returned by the discriminator
+      #when a history of refined synthetic images are given as an input
       self.D_R_x_history, self.D_R_x_history_logits = \
-          self._build_discrim(self.R_x_history,
-                              name="D_R_x_history", reuse=True)
+          self._build_discriminator_patch(self.R_x_history,reuse=True)#,name="D_R_x_history", reuse=False)
+
+      # self.D_R_x_patch, self.D_R_x_patch_logits = \
+      #     self._build_discriminator_patch(self.R_x, name="D_R_x_patch", reuse=True)
 
       #self.estimate_outputs = self._build_estimation_network()
     self._build_loss()
@@ -195,8 +211,14 @@ class Model(object):
           fake_label(self.D_R_x_history_logits),
           "refiner_d_loss_with_history")
       self.discrim_loss_with_history = tf.reduce_mean(
+          #tf.concat_v2 concatenates tensors along one dimension
+          #t1 = [[1,2,3],[4,5,6]]
+          #t2 = [[7,8,9],[10,11,12]]
+          #tf.concat_v2([t1,t2],0) = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
           tf.concat_v2([self.refiner_d_loss, self.refiner_d_loss_with_history], axis=0) + \
               self.synthetic_d_loss, name="discrim_loss_with_history")
+
+
 
       if self.debug:
         self.discrim_loss_with_history = tf.Print(
@@ -304,23 +326,90 @@ class Model(object):
                      activation_fn=None, scope="conv_1")
       output = tanh(layer, name="tanh")
       self.refiner_vars = tf.contrib.framework.get_variables(sc)
-    return output 
+    return output
 
+
+  #layer first gets an imput image
   def _build_discrim(self, layer, name, reuse=False):
-    with tf.variable_scope("discriminator", reuse=reuse) as sc:
-      layer = conv2d(layer, 96, 3, 2, scope="conv_1", name=name)
-      layer = conv2d(layer, 64, 3, 2, scope="conv_2", name=name)
-      layer = max_pool2d(layer, 3, 1, scope="max_1", name=name)
-      layer = conv2d(layer, 32, 3, 1, scope="conv_3", name=name)
-      layer = conv2d(layer, 32, 1, 1, scope="conv_4", name=name)
-      logits = conv2d(layer, 2, 1, 1, scope="conv_5", name=name)
+    #with tf.variable_scope("discriminator" + str(name), reuse=reuse) as sc:
+    #  layer = conv2d(layer, 32, 2, 1, scope="conv_1", name=name)
+    #  layer = conv2d(layer, 16, 2, 1, scope="conv_2", name=name)
+    #  layer = max_pool2d(layer, 2, 1, scope="max_1", name=name)
+    #  layer = conv2d(layer, 8, 2, 1, scope="conv_3", name=name)
+    #  layer = conv2d(layer, 8, 1, 1, scope="conv_4", name=name)
+    #  logits = conv2d(layer, 2, 1, 1, scope="conv_5", name=name)
+     with tf.variable_scope("discriminator"+name, reuse=reuse) as sc:
+       layer = conv2d(layer, 96, 3, 2, scope="conv_1", name=name)
+       layer = conv2d(layer, 64, 3, 2, scope="conv_2", name=name)
+       layer = max_pool2d(layer, 3, 1, scope="max_1", name=name)
+       layer = conv2d(layer, 32, 3, 1, scope="conv_3", name=name)
+       layer = conv2d(layer, 32, 1, 1, scope="conv_4", name=name)
+       logits = conv2d(layer, 2, 1, 1, scope="conv_5", name=name)
       #output is a softmax function generalizing the logistic function that
       #"squashes" a K-dimensional vector z of arbitrary real values to a K-dimensional
       #vector sigma(z) of real values in the range (0,1) that add up to 1
-      output = tf.nn.softmax(logits, name="softmax")
+       output = tf.nn.softmax(logits, name="softmax")
       #gets the list of variables, filtered by scope and/or suffix
-      self.discrim_vars = tf.contrib.framework.get_variables(sc)
-    return output, logits
+       self.discrim_vars = tf.contrib.framework.get_variables(sc)
+     return output, logits
+
+  def set_patch(self,img,w,h):
+      return tf.expand_dims(tf.reshape(img,[-1,w,h]),-1)
+
+  def _build_discriminator_patch(self, layer,reuse=False):
+
+
+      self.patch_width = self.config.input_width / self.config.patch_width
+      self.patch_height = self.config.input_height / self.config.patch_height
+
+      # extract patches from images and put them in the "depth" output dimension
+      # returns a tensor of the same type as image(normalized_y)
+      # 4-D tensor with shape [batch, out_rows, out_cols, ksize_rows * ksize_cols * depth]
+      # self.patched_y = tf.extract_image_patches(self.normalized_y, ksizes=[1, 64, 64, 1], strides=[1,64,64,1],
+      #                                          rates=[1, 1, 1, 1], padding='VALID')
+      self.patched_R_x = tf.extract_image_patches(layer, ksizes=[1, self.patch_width, self.patch_height, 1],
+                                                  strides=[1, self.patch_width, self.patch_height, 1],
+                                                  rates=[1, 1, 1, 1], padding='VALID')
+
+      # self.patched_R_x = tf.Print(self.patched_R_x,[self.patched_R_x],"patched_R_x")
+      #with tf.Session() as sess:
+
+      # first = True
+      # for i in range(0,self.config.patch_height):
+      #     for j in range(0,self.config.patch_width):
+      #         self.patch_name = "_"+str(i) + str(j)
+      #         if not reuse:
+      #           print "Creating discriminator patch" + self.patch_name
+      #         self.tmp_patch = self.set_patch(self.patched_R_x[:,i,j],self.patch_width,self.patch_height)
+      #         self.D_patch, self.D_patch_logits = self._build_discrim(self.tmp_patch,self.patch_name,reuse)
+      #         if first:
+      #           self.D_patch_sum = self.D_patch
+      #           self.D_patch_logits_sum = self.D_patch_logits
+      #           first = False
+      #         else:
+      #           self.D_patch_sum += self.D_patch
+      #           self.D_patch_logits_sum += self.D_patch_logits
+      #
+      # return self.D_patch_sum,self.D_patch_logits_sum
+
+      #===============================================================
+      self.patch_1 = self.set_patch(self.patched_R_x[:,0,0],self.patch_width,self.patch_height)
+      self.patch_2 = self.set_patch(self.patched_R_x[:,0,1],self.patch_width,self.patch_height)
+      self.patch_3 = self.set_patch(self.patched_R_x[:,1,0],self.patch_width,self.patch_height)
+      self.patch_4 = self.set_patch(self.patched_R_x[:,1,1],self.patch_width,self.patch_height)
+
+      self.D_patch_1, self.D_patch_1_logits = self._build_discrim(self.patch_1, "_00", reuse)
+      self.D_patch_2, self.D_patch_2_logits = self._build_discrim(self.patch_2, "_01", reuse)
+      self.D_patch_3, self.D_patch_3_logits = self._build_discrim(self.patch_3, "_10", reuse)
+      self.D_patch_4, self.D_patch_4_logits = self._build_discrim(self.patch_4, "_11", reuse)
+      # print tf.image.resize_images(self.patched_R_x[:,0,0],[64,64])
+
+      self.D_patch = self.D_patch_1 + self.D_patch_2 + self.D_patch_3 + self.D_patch_4
+      self.D_patch_logits = self.D_patch_1_logits + self.D_patch_2_logits + self.D_patch_3_logits + self.D_patch_4_logits
+
+      return self.D_patch , self.D_patch_logits
+
+
 
   def _build_estimation_network(self):
     layer = self.normalized_x
