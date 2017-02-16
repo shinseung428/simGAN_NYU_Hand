@@ -10,7 +10,7 @@ This is just another version of his code that can generate [NYU hand datasets](h
 The structure of the refiner/discriminator networks are changed as it is described in the Apple paper.  
 The only code added in this version is ./data/hand_data.py.  
 Rest of the code runs in the same way as the original version.  
-To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow)
+To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
 
 ###Notes
 -NYU hand dataset is preprocessed(e.g. background removed)  
@@ -33,7 +33,8 @@ Given these synthetic images,
 
 ###Test 1
 
-'lambda=0.5' with 'optimizer=sgd' after 4000 steps.  
+'lambda=0.5' with 'optimizer=sgd'  
+After 4000 steps.  
 
 ![NYU_hand_ref_1](./results/refined_1.png)
 ![NYU_hand_ref_2](./results/refined_2.png)
@@ -41,6 +42,16 @@ Given these synthetic images,
 ![NYU_hand_ref_4](./results/refined_4.png)
 ![NYU_hand_ref_5](./results/refined_5.png)
 ![NYU_hand_ref_6](./results/refined_6.png)
+
+After ~20k steps  
+
+![NYU_hand_ref_1](./results/refined_1.1.png)
+![NYU_hand_ref_2](./results/refined_2.1.png)
+![NYU_hand_ref_3](./results/refined_3.1.png)
+![NYU_hand_ref_4](./results/refined_4.1.png)
+![NYU_hand_ref_5](./results/refined_5.1.png)
+![NYU_hand_ref_6](./results/refined_6.1.png)
+
 
 ![scalar_result_1](./results/scalar_result_1.png)
 
