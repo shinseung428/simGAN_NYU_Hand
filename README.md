@@ -18,7 +18,7 @@ To set up the environment(or to run UnityEyes dataset), please follow instructio
 -Buffer/Batch size was reduced due to memory issues  
 -Local adversarial loss implemented with window size 2x2 but produces artifacts  
 *(will test further with smaller window size)  
-
+-May have to change the size of the discriminator network since the size of the patches are smaller than the original input images
 
 ##Results
 
