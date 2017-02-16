@@ -45,12 +45,12 @@ After 4000 steps.
 
 After ~20k steps  
 
-![NYU_hand_ref_1](./results/refined_1.1.png)
-![NYU_hand_ref_2](./results/refined_2.1.png)
-![NYU_hand_ref_3](./results/refined_3.1.png)
-![NYU_hand_ref_4](./results/refined_4.1.png)
-![NYU_hand_ref_5](./results/refined_5.1.png)
-![NYU_hand_ref_6](./results/refined_6.1.png)
+![NYU_hand_ref_1.1](./results/refined_1.1.png)
+![NYU_hand_ref_2.1](./results/refined_2.1.png)
+![NYU_hand_ref_3.1](./results/refined_3.1.png)
+![NYU_hand_ref_4.1](./results/refined_4.1.png)
+![NYU_hand_ref_5.1](./results/refined_5.1.png)
+![NYU_hand_ref_6.1](./results/refined_6.1.png)
 
 
 ![scalar_result_1](./results/scalar_result_1.png)
