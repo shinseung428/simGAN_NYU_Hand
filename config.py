@@ -29,9 +29,9 @@ data_arg.add_argument('--max_synthetic_num', type=int, default=-1)
 data_arg.add_argument('--real_image_dir', type=str, default="MPIIGaze")
 data_arg.add_argument('--synthetic_image_dir', type=str, default="UnityEyes")
 
-data_arg.add_argument('--hand_data_dir', type=str, default = 'nyu_hand')
+data_arg.add_argument('--hand_data_dir', type=str, default = 'png_cropped_dataset')
 data_arg.add_argument('--joint_data_dir', type=str, default = 'cropped_dataset')
-data_arg.add_argument('--hand_data_dir_sub', type=str, default = 'png_cropped_dataset')
+data_arg.add_argument('--hand_data_dir_sub', type=str, default = '')
 
 # Training / test parameters
 train_arg = add_argument_group('Training')
@@ -53,9 +53,6 @@ train_arg.add_argument('--learning_rate', type=float, default=0.001, help='')
 train_arg.add_argument('--checkpoint_secs', type=int, default=300, help='')
 train_arg.add_argument('--max_grad_norm', type=float, default=50, help='')
 train_arg.add_argument('--optimizer', type=str, default='adam', choices=['adam', 'sgd'], help='')
-
-train_arg.add_argument('--patch_width', type=int, default=2, help='')
-train_arg.add_argument('--patch_height', type=int, default=2, help='')
 
 # Misc
 misc_arg = add_argument_group('Misc')

@@ -118,17 +118,17 @@ class Model(object):
       #self.D_y and self.D_y_logits are the results returned by the discriminator
       #when a real image is given as an input
       self.D_y, self.D_y_logits = \
-          self._build_discriminator_patch(self.normalized_y)#, name="D_y",reuse=False)
+          self._build_discrim(self.normalized_y,name="D_y")
 
       #self.D_R_x and self.D_R_x_logits are the results returned by the discriminator
       #when a refined synthetic image is given as an input
       self.D_R_x, self.D_R_x_logits = \
-          self._build_discriminator_patch(self.R_x,reuse=True)#, name="D_R_x", reuse=False)
+          self._build_discrim(self.R_x, name="D_R_x", reuse=True)
 
       #self.D_R_x_history and self.D_R_x_history_logits are the results returned by the discriminator
       #when a history of refined synthetic images are given as an input
       self.D_R_x_history, self.D_R_x_history_logits = \
-          self._build_discriminator_patch(self.R_x_history,reuse=True)#,name="D_R_x_history", reuse=False)
+          self._build_discrim(self.R_x_history, name="D_R_x_history", reuse=True)
 
       # self.D_R_x_patch, self.D_R_x_patch_logits = \
       #     self._build_discriminator_patch(self.R_x, name="D_R_x_patch", reuse=True)
@@ -328,8 +328,8 @@ class Model(object):
   #layer first gets an imput image
   def _build_discrim(self, layer, name, reuse=False):
     with tf.variable_scope("discriminator", reuse=reuse) as sc:
-       layer = conv2d(layer, 96, 3, 2, scope="conv_1", name=name)
-       layer = conv2d(layer, 64, 3, 2, scope="conv_2", name=name)
+       layer = conv2d(layer, 96, 7, 3, scope="conv_1", name=name)
+       layer = conv2d(layer, 64, 5, 1, scope="conv_2", name=name)
        layer = max_pool2d(layer, 3, 1, scope="max_1", name=name)
        layer = conv2d(layer, 32, 3, 1, scope="conv_3", name=name)
        layer = conv2d(layer, 32, 1, 1, scope="conv_4", name=name)
@@ -337,54 +337,6 @@ class Model(object):
        output = tf.nn.softmax(logits, name="softmax")
        self.discrim_vars = tf.contrib.framework.get_variables(sc)
     return output, logits
-
-  #discriminator that takes an image patch as an input
-  def _build_discrim_patch(self, layer, name, reuse=False):
-    with tf.variable_scope("discriminator" + str(name), reuse=reuse) as sc:
-        layer = conv2d(layer, 32, 2, 1, scope="conv_1", name=name)
-        layer = conv2d(layer, 16, 2, 1, scope="conv_2", name=name)
-        layer = max_pool2d(layer, 2, 1, scope="max_1", name=name)
-        layer = conv2d(layer, 8, 2, 1, scope="conv_3", name=name)
-        layer = conv2d(layer, 8, 1, 1, scope="conv_4", name=name)
-        logits = conv2d(layer, 2, 1, 1, scope="conv_5", name=name)
-        output = tf.nn.softmax(logits, name="softmax")
-        # gets the list of variables, filtered by scope and/or suffix
-        self.discrim_vars = tf.contrib.framework.get_variables(sc)
-    return output, logits
-
-  def set_patch(self,img,w,h):
-      return tf.expand_dims(tf.reshape(img,[-1,w,h]),-1)
-
-  def _build_discriminator_patch(self, layer,reuse=False):
-
-
-      self.patch_width = self.config.input_width / self.config.patch_width
-      self.patch_height = self.config.input_height / self.config.patch_height
-
-      self.patched_R_x = tf.extract_image_patches(layer, ksizes=[1, self.patch_width, self.patch_height, 1],
-                                                  strides=[1, self.patch_width, self.patch_height, 1],
-                                                  rates=[1, 1, 1, 1], padding='VALID')
-
-      first_discriminator = True
-      for i in range(0,self.config.patch_height):
-          for j in range(0,self.config.patch_width):
-              self.patch_name = "_"+str(i) + str(j)
-              if not reuse:
-                print "Creating discriminator patch" + self.patch_name
-
-              #resize and extend dimension of the patch
-              self.tmp_patch = self.set_patch(self.patched_R_x[:,i,j],self.patch_width,self.patch_height)
-              self.D_patch, self.D_patch_logits = self._build_discrim_patch(self.tmp_patch,self.patch_name,reuse)
-
-              if first_discriminator:
-                self.D_patch_sum = self.D_patch
-                self.D_patch_logits_sum = self.D_patch_logits
-                first_discriminator = False
-              else:
-                self.D_patch_sum = tf.add(self.D_patch_sum, self.D_patch)
-                self.D_patch_logits_sum = tf.add(self.D_patch_logits_sum, self.D_patch_logits)
-
-      return self.D_patch_sum,self.D_patch_logits_sum
 
 
   def _build_estimation_network(self):
