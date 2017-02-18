@@ -74,7 +74,9 @@ After ~10k steps.
 ![NYU_hand_ref_17](./results/refined_5.2.png)
 ![NYU_hand_ref_18](./results/refined_6.2.png)
 
-![scalar_result_2](./results/scalar_result_2.png)
+![scalar_result_3](./results/scalar_discrim_result_3.png)
+
+![scalar_result_3](./results/scalar_refine_result_3.png)
 
 ##Summary
 Background of the refined images are darker.  
