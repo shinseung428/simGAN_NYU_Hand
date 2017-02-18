@@ -31,8 +31,7 @@ Given these synthetic images,
 
 ###Test 1
 
-'lambda=0.1' with 'optimizer=sgd'  
-After 10k steps.  
+'lambda=0.1' with 'optimizer=sgd' after ~10k steps.  
 
 ![NYU_hand_ref_1](./results/refined_1.png)
 ![NYU_hand_ref_2](./results/refined_2.png)
@@ -49,8 +48,7 @@ Refiner Loss
 
 ###Test 2
 
-'lambda=0.5' with 'optimizer=sgd'  
-After ~10k steps.  
+'lambda=0.5' with 'optimizer=sgd' after ~10k steps.  
 
 ![NYU_hand_ref_7](./results/refined_1.1.png)
 ![NYU_hand_ref_8](./results/refined_2.1.png)
@@ -65,7 +63,7 @@ After ~10k steps.
 
 ###Test 3
 
-'lambda=1.0' with 'optimizer=sgd' after 10k steps.  
+'lambda=1.0' with 'optimizer=sgd' after ~10k steps.  
 
 ![NYU_hand_ref_13](./results/refined_1.2.png)
 ![NYU_hand_ref_14](./results/refined_2.2.png)
