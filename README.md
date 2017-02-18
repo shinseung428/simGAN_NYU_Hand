@@ -33,6 +33,8 @@ Given these synthetic images,
 
 'lambda=0.1' with 'optimizer=sgd'  
 After 10k steps.  
+*Background of the refined images are changed.  
+Some of the backgrounds were not properly removed while segmenting real hand dataset.  
 
 ![NYU_hand_ref_1](./results/refined_1.png)
 ![NYU_hand_ref_2](./results/refined_2.png)
