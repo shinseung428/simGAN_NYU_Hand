@@ -33,8 +33,8 @@ Given these synthetic images,
 
 'lambda=0.1' with 'optimizer=sgd'  
 After 10k steps.  
-*Background of the refined images are changed.  
-Some of the backgrounds were not properly removed while segmenting real hand dataset.  
+Background of the refined images are darker.  
+Some of the backgrounds were not properly removed while segmenting real images.  
 
 ![NYU_hand_ref_1](./results/refined_1.png)
 ![NYU_hand_ref_2](./results/refined_2.png)
@@ -43,7 +43,11 @@ Some of the backgrounds were not properly removed while segmenting real hand dat
 ![NYU_hand_ref_5](./results/refined_5.png)
 ![NYU_hand_ref_6](./results/refined_6.png)
 
-![scalar_result_1](./results/scalar_result_1.png)
+Discriminator Loss  
+![scalar_d_result_1](./results/scalar_discrim_result_1.png)
+
+Refiner Loss  
+![scalar_r_result_1](./results/scalar_refine_result_1.png)
 
 ###Test 2
 
