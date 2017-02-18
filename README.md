@@ -49,7 +49,8 @@ Refiner Loss
 
 ###Test 2
 
-'lambda=0.1' with 'optimizer=sgd' after 10k steps.  
+'lambda=0.5' with 'optimizer=sgd'  
+After ~10k steps.  
 
 ![NYU_hand_ref_7](./results/refined_1.1.png)
 ![NYU_hand_ref_8](./results/refined_2.1.png)
@@ -58,7 +59,9 @@ Refiner Loss
 ![NYU_hand_ref_11](./results/refined_5.1.png)
 ![NYU_hand_ref_12](./results/refined_6.1.png)
 
-![scalar_result_2](./results/scalar_result_2.png)
+![scalar_result_2](./results/scalar_discrim_result_2.png)
+
+![scalar_result_2](./results/scalar_refine_result_2.png)
 
 ###Test 3
 
