@@ -16,7 +16,7 @@ To set up the environment(or to run UnityEyes dataset), please follow instructio
 -NYU hand dataset is preprocessed(e.g. background removed)  
 -Image size set to 128x128  
 -Buffer/Batch size was reduced due to memory issues  
--May have to change the size of the discriminator network since the input image size is reduced  
+-Changed the size of the refiner/discriminator network
 
 ##Results
 
@@ -33,8 +33,6 @@ Given these synthetic images,
 
 'lambda=0.1' with 'optimizer=sgd'  
 After 10k steps.  
-Background of the refined images are darker.  
-Some of the backgrounds were not properly removed while segmenting real images.  
 
 ![NYU_hand_ref_1](./results/refined_1.png)
 ![NYU_hand_ref_2](./results/refined_2.png)
@@ -51,30 +49,34 @@ Refiner Loss
 
 ###Test 2
 
-'lambda=0.1' with 'optimizer=sgd' after 20k steps.  
+'lambda=0.1' with 'optimizer=sgd' after 10k steps.  
 
-![NYU_hand_ref_7](./results/refined_0.5_1.png)
-![NYU_hand_ref_8](./results/refined_0.5_2.png)
-![NYU_hand_ref_9](./results/refined_0.5_3.png)
-![NYU_hand_ref_10](./results/refined_0.5_4.png)
-![NYU_hand_ref_11](./results/refined_0.5_5.png)
-![NYU_hand_ref_12](./results/refined_0.5_6.png)
+![NYU_hand_ref_7](./results/refined_1.1.png)
+![NYU_hand_ref_8](./results/refined_2.1.png)
+![NYU_hand_ref_9](./results/refined_3.1.png)
+![NYU_hand_ref_10](./results/refined_4.1.png)
+![NYU_hand_ref_11](./results/refined_5.1.png)
+![NYU_hand_ref_12](./results/refined_6.1.png)
 
 ![scalar_result_2](./results/scalar_result_2.png)
 
 ###Test 3
 
-'lambda=1.0' with 'optimizer=sgd' after 20k steps.  
+'lambda=1.0' with 'optimizer=sgd' after 10k steps.  
 
-![NYU_hand_ref_13](./results/refined_1.0_1.png)
-![NYU_hand_ref_14](./results/refined_1.0_2.png)
-![NYU_hand_ref_15](./results/refined_1.0_3.png)
-![NYU_hand_ref_16](./results/refined_1.0_4.png)
-![NYU_hand_ref_17](./results/refined_1.0_5.png)
-![NYU_hand_ref_18](./results/refined_1.0_6.png)
+![NYU_hand_ref_13](./results/refined_1.2.png)
+![NYU_hand_ref_14](./results/refined_2.2.png)
+![NYU_hand_ref_15](./results/refined_3.2.png)
+![NYU_hand_ref_16](./results/refined_4.2.png)
+![NYU_hand_ref_17](./results/refined_5.2.png)
+![NYU_hand_ref_18](./results/refined_6.2.png)
 
 ![scalar_result_2](./results/scalar_result_2.png)
 
+##Summary
+Background of the refined images are darker.  
+Some of the real image backgrounds were not properly removed while obtaining the arm hand segments from the real dataset.  
+When the refiner tries to make refined synthetic images, it also changes the colour of the background to make it look like the ones in the real image dataset.
 
 ## Author
 
