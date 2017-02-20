@@ -10,7 +10,7 @@ This is just another version of his code that can generate [NYU hand datasets](h
 The structure of the refiner/discriminator networks are changed as it is described in the Apple paper.  
 The only code added in this version is ./data/hand_data.py.  
 Rest of the code runs in the same way as the original version.  
-To set up the environment(or to run UnityEyes dataset), please follow instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
+To set up the environment(or to run UnityEyes dataset), please follow the instructions in this [link](https://github.com/carpedm20/simulated-unsupervised-tensorflow).
 
 ###Notes
 -NYU hand dataset is preprocessed(e.g. background removed)  
@@ -77,9 +77,7 @@ Refiner Loss
 ![scalar_result_3](./results/scalar_refine_result_3.png)
 
 ##Summary
-Background of the refined images are darker.  
-Some of the real image backgrounds were not properly removed while obtaining the arm hand segments from the real dataset.  
-When the refiner tries to make refined synthetic images, it also changes the colour of the background to make it look like the ones in the real image dataset.
+The background of the refined images are darker. This is because some of the real image backgrounds were not properly removed while obtaining the arm hand segments. When the refiner tries to make refined synthetic images, it also changes the colour of the background to make it look like the ones in the real dataset.
 
 ## Author
 
