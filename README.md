@@ -77,7 +77,8 @@ Refiner Loss
 ![scalar_result_3](./results/scalar_refine_result_3.png)
 
 ##Summary
-The background of the refined images are darker. This is because some of the real image backgrounds were not properly removed while obtaining the arm hand segments. When the refiner tries to make refined synthetic images, it also changes the colour of the background to make it look like the ones in the real dataset.
+-The result clearly shows that the refined images look more like the ones in the real dataset as the value of lambda gets smaller.  
+-The background of the refined images are darker. This is because some of the real image backgrounds were not properly removed while obtaining the arm hand segments. When the refiner tries to make refined synthetic images, it also changes the colour of the background to make it look like the ones in the real dataset.
 
 ## Author
 
