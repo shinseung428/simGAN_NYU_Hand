@@ -128,7 +128,7 @@ class Model(object):
       #self.D_R_x_history and self.D_R_x_history_logits are the results returned by the discriminator
       #when a history of refined synthetic images are given as an input
       self.D_R_x_history, self.D_R_x_history_logits = \
-          self._build_discrim(self.R_x_history, name="D_R_x_history", reuse=True)
+          self._build_discrim(self.R_x_history,name="D_R_x_history", reuse=True)
 
       # self.D_R_x_patch, self.D_R_x_patch_logits = \
       #     self._build_discriminator_patch(self.R_x, name="D_R_x_patch", reuse=True)
@@ -148,10 +148,23 @@ class Model(object):
       #tf.reduce_sum computes the sum of elements across dimensions of a tensor
       #reduces input_tensor ( SE_loss(logits=logits,lables=label) along the dimensions
       #given in axis [1,2]
+      #logits shape = [? , window_width, window_height, 2] *2 here is the number of classes( 0 - real 1 - synthetic)
+      #label shape = [? , window_width, window_height, 1] tensor filled with either 1 or 0
+
       return tf.reduce_sum(SE_loss(logits=logits, labels=label), [1, 2], name=name)
       #SE_loss : computes sparse softmax cross entropy between logits and labels
+
+    def log_loss_(logits, label, name):
+      #tf.reduce_sum computes the sum of elements across dimensions of a tensor
+      #reduces input_tensor ( SE_loss(logits=logits,lables=label) along the dimensions
+      #given in axis [1,2]
+      #logits shape = [? , window_width, window_height, 2] *2 here is the number of classes( 0 - real 1 - synthetic)
+      #label shape = [? , window_width, window_height, 1] tensor filled with either 1 or 0
+
+      return tf.reduce_sum(SE_loss(logits=logits, labels=label), [1, 2], name=name),SE_loss(logits=logits, labels=label)
+      #SE_loss : computes sparse softmax cross entropy between logits and labels
     with tf.name_scope("refiner"):
-      self.realism_loss = log_loss(
+      self.realism_loss,self.se_loss = log_loss_(
           #self.D_R_x_logits comes from the discriminator network
           self.D_R_x_logits, real_label(self.D_R_x_logits), "realism_loss")
       self.regularization_loss = \
@@ -163,7 +176,9 @@ class Model(object):
           self.realism_loss + self.regularization_loss,
           name="refiner_loss")
 
+
       if self.debug:
+        self.refiner_loss = tf.Print(self.refiner_loss, [self.realism_loss])
         self.refiner_loss = tf.Print(
             self.refiner_loss, [self.R_x], "R_x")
         self.refiner_loss = tf.Print(
@@ -328,8 +343,8 @@ class Model(object):
   #layer first gets an imput image
   def _build_discrim(self, layer, name, reuse=False):
     with tf.variable_scope("discriminator", reuse=reuse) as sc:
-       layer = conv2d(layer, 96, 7, 3, scope="conv_1", name=name)
-       layer = conv2d(layer, 64, 5, 1, scope="conv_2", name=name)
+       layer = conv2d(layer, 96, 7, 2, scope="conv_1", name=name)
+       layer = conv2d(layer, 64, 5, 2, scope="conv_2", name=name)
        layer = max_pool2d(layer, 3, 1, scope="max_1", name=name)
        layer = conv2d(layer, 32, 3, 1, scope="conv_3", name=name)
        layer = conv2d(layer, 32, 1, 1, scope="conv_4", name=name)
@@ -337,7 +352,6 @@ class Model(object):
        output = tf.nn.softmax(logits, name="softmax")
        self.discrim_vars = tf.contrib.framework.get_variables(sc)
     return output, logits
-
 
   def _build_estimation_network(self):
     layer = self.normalized_x
@@ -348,4 +362,5 @@ class Model(object):
       layer = conv2d(layer, 32, 3, 1, scope="conv_3")
       layer = conv2d(layer, 32, 1, 1, scope="conv_4")
       layer = conv2d(layer, 2, 1, 1, activation_fn=slim.softmax)
+
     return layer
